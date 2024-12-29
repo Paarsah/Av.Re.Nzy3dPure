@@ -7,7 +7,9 @@
         x:Class="Mag3DView.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Mag3DView">
+        Title="Mag3DView"
+		xmlns:local="using:Mag3DView.Views"
+		>
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -15,6 +17,20 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+<!--
+        <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+-->
+		<local:Mag3DViewControl Grid.Row="0" />
+
+		<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+			<Slider Minimum="0" Maximum="360" Value="{Binding RotationAngle}" Width="200" />
+			<Button Command="{Binding ResetViewCommand}" Content="Reset View" Margin="10,0,0,0" />
+		</StackPanel>
+	</Grid>
 
 </Window>

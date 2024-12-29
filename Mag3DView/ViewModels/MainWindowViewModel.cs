@@ -1,9 +1,27 @@
-﻿namespace Mag3DView.ViewModels
+﻿using ReactiveUI;
+using System.Reactive;
+
+namespace Mag3DView.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-#pragma warning disable CA1822 // Mark members as static
         public string Greeting => "Welcome to Avalonia!";
-#pragma warning restore CA1822 // Mark members as static
+
+        private double _rotationAngle;
+        public double RotationAngle
+        {
+            get => _rotationAngle;
+            set => this.RaiseAndSetIfChanged(ref _rotationAngle, value);
+        }
+
+        public ReactiveCommand<Unit, Unit> ResetViewCommand { get; }
+
+        public MainWindowViewModel()
+        {
+            ResetViewCommand = ReactiveCommand.Create(() =>
+            {
+                RotationAngle = 0;
+            });
+        }
     }
 }
