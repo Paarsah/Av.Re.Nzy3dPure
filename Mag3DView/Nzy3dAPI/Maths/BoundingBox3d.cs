@@ -3,22 +3,32 @@ using System.Collections.Generic;
 
 namespace Mag3DView.Nzy3dAPI.Maths
 {
-	/// <summary>
-	/// A BoundingBox3d stores a couple of maximal and minimal limit on
-	/// each dimension (x, y) in cartesian coordinates. It provides functions for enlarging
-	/// the box by adding cartesian coordinates or an other
-	/// BoundingBox3d (that is equivalent to computing the union of the
-	/// current BoundingBox and another one).
-	/// </summary>
-	public sealed class BoundingBox3d
+    /// <summary>
+    /// A BoundingBox3d stores a couple of maximal and minimal limit on
+    /// each dimension (x, y) in cartesian coordinates. It provides functions for enlarging
+    /// the box by adding cartesian coordinates or an other
+    /// BoundingBox3d (that is equivalent to computing the union of the
+    /// current BoundingBox and another one).
+    /// </summary>
+    public sealed class BoundingBox3d
 	{
+		public double Xmin { get; set; }
+		public double Xmax { get; set; }
+		public double Ymin { get; set; }
+		public double Ymax { get; set; }
+		public double Zmin { get; set; }
+		public double Zmax { get; set; }
+
 		/// <summary>
 		/// Initialize a BoundingBox by calling its reset method.
 		/// </summary>
 		public BoundingBox3d()
 		{
-			Reset();
+            Xmin = Ymin = Zmin = 0;
+            Xmax = Ymax = Zmax = 0;
+            Reset();
 		}
+
 
 		/// <summary>
 		/// Initialize a BoundingBox by calling its reset method and then adding a set of coordinates

@@ -23,7 +23,7 @@ namespace Mag3DView.Nzy3dAPI.Chart
         private Coord3d _previousMousePosition;
         public static readonly Quality DEFAULT_QUALITY = Quality.Intermediate;
 
-        public Chart(ICanvas canvas) : this(canvas, DEFAULT_QUALITY)
+        public Chart(ICanvas canvas, Plot3D.Rendering.Scenes.Scene scene) : this(canvas, DEFAULT_QUALITY)
         {
         }
 
