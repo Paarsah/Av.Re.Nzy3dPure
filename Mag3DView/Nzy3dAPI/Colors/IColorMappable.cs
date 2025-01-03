@@ -11,5 +11,9 @@ namespace Mag3DView.Nzy3dAPI.Colors
 		/// Get/Set the upper value boundary for a <see cref="ColorMaps.IColorMap"/>.
 		/// </summary>
 		double ZMax { get; set; }
-	}
+
+        double GetMin();
+        double GetMax();
+
+    }
 }

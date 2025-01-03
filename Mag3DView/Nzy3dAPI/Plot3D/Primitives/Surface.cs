@@ -1,4 +1,5 @@
 ﻿using Mag3DView.Nzy3dAPI.Colors;
+using Mag3DView.Nzy3dAPI.Maths;
 using Mag3DView.Nzy3dAPI.Plot3D.Primitives;
 using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views;
 using OpenTK.Graphics.OpenGL;
@@ -16,11 +17,22 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
         private int vertexBufferObject;
         private int indexBufferObject;
 
+
         public bool FaceDisplayed { get; set; } = true;  // Default to true
         public bool WireframeDisplayed { get; set; } = true;  // Default to true
         public Color WireframeColor { get; set; } = new Color(1, 1, 1, 1); // Default to white
         public ColorMapper ColorMapper { get; set; }
         public Bounds Bounds { get; private set; }
+
+        public Func<float, float, float> Function { get; }
+        public int Resolution { get; }
+
+        // Custom Constructor 
+        public Surface(Func<float, float, float> function, int resolution)
+        {
+            Function = function;
+            Resolution = resolution;
+        }
 
         // Constructor (keep this without OpenGL initialization)
         public Surface(Func<float, float, float> surfaceFunction, int gridSize, float scale = 1f)
@@ -87,6 +99,12 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
         public override void Draw(Camera cam)
         {
             Render();
+        }
+
+        public override BoundingBox3d GetBounds()
+        {
+            // Compute and return the bounding box based on the function
+            return new BoundingBox3d();
         }
 
         public void Render()

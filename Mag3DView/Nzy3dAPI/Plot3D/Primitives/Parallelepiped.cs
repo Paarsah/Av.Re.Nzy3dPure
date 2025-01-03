@@ -187,6 +187,11 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 			_quads[5].Add(new Point(new Coord3d(_bbox.XMax, _bbox.YMax, _bbox.ZMin)));
 		}
 
+        public override BoundingBox3d GetBounds()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public ColorMapper ColorMapper
 		{
 			get { return _mapper; }

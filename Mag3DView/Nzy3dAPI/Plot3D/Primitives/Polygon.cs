@@ -283,5 +283,10 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 		{
 			return $"{Utils.Blanks(depth)}(Polygon) #points={this.Size}";
 		}
+
+        public override BoundingBox3d GetBounds()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

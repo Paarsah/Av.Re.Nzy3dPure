@@ -151,6 +151,11 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
             }
         }
 
+        public override BoundingBox3d GetBounds()
+        {
+            throw new System.NotImplementedException();
+        }
+
         private List<Coord3d[]> Data
         {
             get => _coordinates;

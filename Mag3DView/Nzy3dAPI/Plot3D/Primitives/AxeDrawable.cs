@@ -1,4 +1,5 @@
-﻿using Mag3DView.Nzy3dAPI.Maths;
+﻿using Mag3DView.Nzy3dAPI.Colors;
+using Mag3DView.Nzy3dAPI.Maths;
 using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views;
 using System;
 
@@ -13,17 +14,24 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
             _bbox = bbox;
         }
 
-        // Implement the required Draw method
         public override void Draw(Camera camera)
         {
-            // Custom drawing logic for axes using the camera and bounding box
-            Console.WriteLine("Drawing axes with bounding box: " + _bbox);
+            // Draw axis lines
+            DrawLine(camera, new Coord3d(_bbox.Xmin, 0, 0), new Coord3d(_bbox.Xmax, 0, 0), Color.RED); // X-axis
+            DrawLine(camera, new Coord3d(0, _bbox.Ymin, 0), new Coord3d(0, _bbox.Ymax, 0), Color.GREEN); // Y-axis
+            DrawLine(camera, new Coord3d(0, 0, _bbox.Zmin), new Coord3d(0, 0, _bbox.Zmax), Color.BLUE); // Z-axis
+
+            // Optionally, add ticks or labels here
         }
 
-        // Override the Bounds property to return the bounding box
-        public override BoundingBox3d Bounds
+        private void DrawLine(Camera camera, Coord3d start, Coord3d end, Color color)
         {
-            get { return _bbox; }
+            // Implement actual line drawing logic with canvas or OpenGL
+        }
+
+        public override BoundingBox3d GetBounds()
+        {
+            return _bbox;
         }
     }
 }

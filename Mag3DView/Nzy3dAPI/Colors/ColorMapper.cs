@@ -84,5 +84,15 @@ namespace Mag3DView.Nzy3dAPI.Colors
 		{
 			return "(ColorMapper) " + ColorMap.ToString() + " zmin=" + ZMin + " zmax=" + ZMax + " factor=" + m_factor.ToString();
 		}
-	}
+
+        public double GetMin()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public double GetMax()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

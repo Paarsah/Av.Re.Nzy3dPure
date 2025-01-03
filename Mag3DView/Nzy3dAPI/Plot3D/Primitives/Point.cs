@@ -145,5 +145,9 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 			return Utils.Blanks(depth) + "(Point) coord={" + _xyz.ToString() + "}, color={" + _rgb.ToString() + "}";
 		}
 
+        public override BoundingBox3d GetBounds()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

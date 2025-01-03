@@ -39,7 +39,10 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 	/// </summary>
 	public abstract class AbstractDrawable : IGLRenderer, ISortableDraw
 	{
-		internal Transform.Transform _transform;
+        public abstract BoundingBox3d GetBounds();
+        public abstract void Draw(Camera camera);
+
+        internal Transform.Transform _transform;
 		internal BoundingBox3d _bbox;
 		internal Legend _legend = null;
 		internal List<IDrawableListener> _listeners = new List<IDrawableListener>();
@@ -50,8 +53,6 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 		{
 			_listeners?.Clear();
 		}
-
-		public abstract void Draw(Camera cam);
 
 		internal static void CallC(Color c)
 		{

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
-using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views;
 using Mag3DView.Nzy3dAPI.Plot3D.Primitives;
+using Mag3DView.Nzy3dAPI.Maths;
 
 namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
 {
@@ -49,6 +49,11 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
             }
 
             GL.End();
+        }
+
+        public override BoundingBox3d GetBounds()
+        {
+            throw new NotImplementedException();
         }
     }
 }

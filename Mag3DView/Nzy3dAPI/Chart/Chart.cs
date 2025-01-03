@@ -8,6 +8,7 @@ using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views.Modes;
 using System.Collections.Generic;
 using System;
 using Mag3DView.Nzy3dAPI.Events.Mouse;
+using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes;
 
 namespace Mag3DView.Nzy3dAPI.Chart
 {
@@ -22,9 +23,10 @@ namespace Mag3DView.Nzy3dAPI.Chart
         protected List<AbstractCameraController> _controllers;
         private Coord3d _previousMousePosition;
         public static readonly Quality DEFAULT_QUALITY = Quality.Intermediate;
-
-        public Chart(ICanvas canvas, Plot3D.Rendering.Scenes.Scene scene) : this(canvas, DEFAULT_QUALITY)
+        public Camera Camera { get; private set; }
+        public Chart(ICanvas canvas, Scene scene) : this(canvas, DEFAULT_QUALITY)
         {
+            Camera = new Camera();
         }
 
         public Chart(ICanvas canvas, Quality quality)

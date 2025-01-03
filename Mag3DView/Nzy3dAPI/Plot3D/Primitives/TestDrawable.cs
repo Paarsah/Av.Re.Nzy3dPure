@@ -22,5 +22,10 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
         {
             // Implement drawing logic here
         }
+
+        public override BoundingBox3d GetBounds()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

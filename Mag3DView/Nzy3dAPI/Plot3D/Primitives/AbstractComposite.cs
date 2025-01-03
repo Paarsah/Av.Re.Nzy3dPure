@@ -336,12 +336,17 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 			return output;
 		}
 
-		/// <summary>
-		/// Get / Set the property.
-		/// When to true, the <see cref="CompileableComposite.toString"/> method will give the detail of each element
-		/// of this composite object in a tree like layout.
-		/// </summary>
-		public bool DetailedToString
+        public override BoundingBox3d GetBounds()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get / Set the property.
+        /// When to true, the <see cref="CompileableComposite.toString"/> method will give the detail of each element
+        /// of this composite object in a tree like layout.
+        /// </summary>
+        public bool DetailedToString
 		{
 			get { return _detailedToString; }
 			set { _detailedToString = value; }
