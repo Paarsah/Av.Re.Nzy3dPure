@@ -38,7 +38,7 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes
 		internal Transform.Transform _transform;
 		internal AbstractOrderingStrategy _strategy;
         public BoundingBox3d Bounds { get; private set; }
-        public List<AbstractDrawable> Objects { get; private set; }
+        public List<AbstractDrawable> Objects { get; private set; } = new List<AbstractDrawable>();
 
 
         internal bool _sort = true;

@@ -41,22 +41,23 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Canvas
 		internal bool _isAnimated = true;
 
 		internal bool _isAutoSwapBuffer = true;
+        private bool v;
 
-		/// <summary>
-		/// Provides a structure for setting the rendering quality, i.e., the tradeoff
-		/// between computation speed, and graphic quality. Following mode have an impact
-		/// on the way the <see cref="View.View"/> makes its GL2 initialization.
-		/// The <see cref="Quality"/> may also activate an <see cref="Ordering.AbstractOrderingStrategy"/> algorithm
-		/// that enables clean alpha results.
-		/// </summary>
-		/// <param name="depthActivated">Depth activated.</param>
-		/// <param name="alphaActivated">Alpha activated.</param>
-		/// <param name="smoothColor">Smooth color.</param>
-		/// <param name="smoothPoint">Smooth point.</param>
-		/// <param name="smoothLine">Smooth line.</param>
-		/// <param name="smoothPolygon">Smooth polygon.</param>
-		/// <param name="disableDepth">Disable depth buffer when alpha.</param>
-		public Quality(bool depthActivated, bool alphaActivated, bool smoothColor, bool smoothPoint, bool smoothLine, bool smoothPolygon, bool disableDepth)
+        /// <summary>
+        /// Provides a structure for setting the rendering quality, i.e., the tradeoff
+        /// between computation speed, and graphic quality. Following mode have an impact
+        /// on the way the <see cref="View.View"/> makes its GL2 initialization.
+        /// The <see cref="Quality"/> may also activate an <see cref="Ordering.AbstractOrderingStrategy"/> algorithm
+        /// that enables clean alpha results.
+        /// </summary>
+        /// <param name="depthActivated">Depth activated.</param>
+        /// <param name="alphaActivated">Alpha activated.</param>
+        /// <param name="smoothColor">Smooth color.</param>
+        /// <param name="smoothPoint">Smooth point.</param>
+        /// <param name="smoothLine">Smooth line.</param>
+        /// <param name="smoothPolygon">Smooth polygon.</param>
+        /// <param name="disableDepth">Disable depth buffer when alpha.</param>
+        public Quality(bool depthActivated, bool alphaActivated, bool smoothColor, bool smoothPoint, bool smoothLine, bool smoothPolygon, bool disableDepth)
 		{
 			DepthActivated = depthActivated;
 			AlphaActivated = alphaActivated;
@@ -67,7 +68,12 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Canvas
 			DisableDepthBufferWhenAlpha = disableDepth;
 		}
 
-		public bool DepthActivated { get; set; }
+        public Quality(bool v)
+        {
+            this.v = v;
+        }
+
+        public bool DepthActivated { get; set; }
 
 		public bool AlphaActivated { get; set; }
 

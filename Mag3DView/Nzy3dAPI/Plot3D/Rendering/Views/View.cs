@@ -200,31 +200,40 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
         }
 
         static internal View Current;
-		public View(Scene scene, ICanvas canvas, Quality quality)
-		{
-			BoundingBox3d sceneBounds = scene.Graph.Bounds;
-			_viewpoint = DEFAULT_VIEW.Clone();
-			_center = sceneBounds.GetCenter();
-			_scaling = Coord3d.IDENTITY.Clone();
-			_viewmode = ViewPositionMode.FREE;
-			_boundmode = ViewBoundMode.AUTO_FIT;
-			_cameraMode = CameraMode.ORTHOGONAL;
-			_axe = (IAxe)AxeFactory.GetInstance(sceneBounds, this);
-			_cam = CameraFactory.GetInstance(_center);
-			_scene = scene;
-			_canvas = canvas;
-			_quality = quality;
-			_renderers = new List<IBaseRenderer2D>();
-			//_tooltips = New List(Of ITooltipRenderer)
-			_bgViewport = new ImageViewport();
-			_viewOnTopListeners = new List<IViewIsVerticalEventListener>();
-			_viewPointChangedListeners = new List<IViewPointChangedListener>();
-			_wasOnTopAtLastRendering = false;
-			//_overlay = New Overlay
-			View.Current = this;
-		}
+        private Camera _camera;
 
-		public void Dispose()
+        public View(Scene scene, ICanvas canvas, Quality quality)
+        {
+            _scene = scene ?? throw new ArgumentNullException(nameof(scene));
+            _canvas = canvas ?? throw new ArgumentNullException(nameof(canvas));
+            _quality = quality ?? new Quality(true);
+
+            // Ensure scene.Graph and its Bounds are initialized
+            BoundingBox3d sceneBounds = scene.Graph?.Bounds ?? new BoundingBox3d(0, 0, 0, 1, 1, 1);
+
+            _viewpoint = DEFAULT_VIEW.Clone();
+            _center = sceneBounds.GetCenter();
+            _scaling = Coord3d.IDENTITY.Clone();
+            _viewmode = ViewPositionMode.FREE;
+            _boundmode = ViewBoundMode.AUTO_FIT;
+            _cameraMode = CameraMode.ORTHOGONAL;
+            _axe = (IAxe)AxeFactory.GetInstance(sceneBounds, this);
+            _cam = CameraFactory.GetInstance(_center);
+            _renderers = new List<IBaseRenderer2D>();
+            _bgViewport = new ImageViewport();
+            _viewOnTopListeners = new List<IViewIsVerticalEventListener>();
+            _viewPointChangedListeners = new List<IViewPointChangedListener>();
+            _wasOnTopAtLastRendering = false;
+            View.Current = this;
+
+            _camera = new Camera(this);
+            _camera.Zoom = 1;
+
+            // Set the camera position
+            _camera.SetPosition(sceneBounds.GetCenter());
+        }
+
+        public void Dispose()
 		{
 			_axe.Dispose();
 			_cam = null;

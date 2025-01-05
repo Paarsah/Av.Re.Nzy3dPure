@@ -40,7 +40,6 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
         public float Zoom { get; set; } = 5.0f;
         public float RotationX { get; set; } = 0.0f;
         public float RotationY { get; set; } = 0.0f;
-
         public Matrix4 GetViewMatrix()
         {
             var rotationMatrixX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(RotationX));
@@ -514,6 +513,16 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
             double elevation = _eye.Elevation + angleY;
 
             _eye = new Coord3d(azimuth, elevation, _eye.Distance(_target));
+        }
+
+        public Camera(View view)
+        {
+            Position = Coord3d.IDENTITY.Clone(); // Default position
+        }
+
+        public void SetPosition(Coord3d position)
+        {
+            Position = position.Clone(); // Clone to avoid reference issues
         }
 
     }
