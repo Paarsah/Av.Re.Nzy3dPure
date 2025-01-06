@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System;
 using Mag3DView.Nzy3dAPI.Events.Mouse;
 using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes;
+using System.Diagnostics;
+using Mag3DView.Controls;
 
 namespace Mag3DView.Nzy3dAPI.Chart
 {
@@ -72,7 +74,27 @@ namespace Mag3DView.Nzy3dAPI.Chart
 
         public void Render()
         {
-            _view.Shoot();
+            if (_view == null || _canvas == null)
+            {
+                Debug.WriteLine("View or Canvas is not initialized. Skipping render.");
+                return;
+            }
+
+            Debug.WriteLine("Starting render...");
+            if (_canvas is AvaloniaCanvas avaloniaCanvas)
+            {
+                avaloniaCanvas.MakeCurrent();
+                avaloniaCanvas.Clear();
+            }
+
+            _view.Shoot(); // Render the scene
+
+            if (_canvas is AvaloniaCanvas avaloniaCanvasSwap)
+            {
+                avaloniaCanvasSwap.SwapBuffers();
+            }
+
+            Debug.WriteLine("Render completed.");
         }
 
         //public System.Drawing.Bitmap Screenshot()

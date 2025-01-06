@@ -63,22 +63,16 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives.Axes
 		{
 		}
 
-		public AxeBox(BoundingBox3d bbox, IAxeLayout layout)
-		{
-			_layout = layout;
-			if (bbox.IsValid())
-			{
-				SetAxe(bbox);
-			}
-			else
-			{
-				SetAxe(new BoundingBox3d(-1, 1, -1, 1, -1, 1));
-			}
-			_wholeBounds = new BoundingBox3d();
-			Init();
-		}
+        public AxeBox(BoundingBox3d bbox, IAxeLayout layout)
+        {
+            _layout = layout;
+            bbox = bbox?.IsValid() == true ? bbox : new BoundingBox3d(-1, 1, -1, 1, -1, 1);
+            SetAxe(bbox);
+            _wholeBounds = new BoundingBox3d();
+            Init();
+        }
 
-		public void Init()
+        public void Init()
 		{
 			this.Scale = new Coord3d(1, 1, 1);
 		}
