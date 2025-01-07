@@ -4,6 +4,8 @@ using Mag3DView.Nzy3dAPI.Maths;
 using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views;
 using Mag3DView.Nzy3dAPI.Plot3D.Transform;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 {
@@ -53,32 +55,60 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 
         public override void Draw(Camera cam)
         {
-            _transform?.Execute();
+            Debug.WriteLine("Executing Scatter.Draw()...");
 
+            // Apply transformations if any
+            if (_transform != null)
+            {
+                Debug.WriteLine("Applying transformation...");
+                _transform.Execute();
+            }
+
+            // Set point size
             GL.PointSize(Width);
             GL.Begin(PrimitiveType.Points);
+
             if (_colors == null)
             {
+                // Set default color if no colors array is provided
+                Debug.WriteLine($"Using default color: R={Color.R}, G={Color.G}, B={Color.B}, A={Color.A}");
                 GL.Color4(Color.R, Color.G, Color.B, Color.A);
             }
 
             if (_coordinates != null)
             {
                 int k = 0;
-                foreach (Coord3d c in _coordinates)
+                Debug.WriteLine($"Rendering {_coordinates.Length} points...");
+                foreach (Coord3d coord in _coordinates)
                 {
-                    if (_colors != null)
+                    // Apply individual colors if available
+                    if (_colors != null && k < _colors.Length)
                     {
-                        GL.Color4(_colors[k].R, _colors[k].G, _colors[k].B, _colors[k].A);
+                        var pointColor = _colors[k];
+                        Debug.WriteLine($"Point {k}: R={pointColor.R}, G={pointColor.G}, B={pointColor.B}, A={pointColor.A} at X={coord.X}, Y={coord.Y}, Z={coord.Z}");
+                        GL.Color4(pointColor.R, pointColor.G, pointColor.B, pointColor.A);
                         k++;
                     }
 
-                    GL.Vertex3(c.X, c.Y, c.Z);
+                    // Render the vertex
+                    GL.Vertex3(coord.X, coord.Y, coord.Z);
                 }
             }
+            else
+            {
+                Debug.WriteLine("No coordinates to render.");
+            }
+
             GL.End();
 
-            // doDrawBounds (MISSING)
+            // Check for OpenGL errors
+            var error = GL.GetError();
+            if (error != ErrorCode.NoError)
+            {
+                Debug.WriteLine($"OpenGL Error in Scatter.Draw(): {error}");
+            }
+
+            Debug.WriteLine("Scatter.Draw() complete.");
         }
 
         public override Transform.Transform Transform
