@@ -11,7 +11,7 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
     {
         private Color[] _colors;
         private Coord3d[] _coordinates;
-
+        private Color _color;
         public Scatter()
         {
             _bbox = new BoundingBox3d();
@@ -22,6 +22,11 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
         public Scatter(Coord3d[] coordinates) :
                 this(coordinates, Color.BLACK)
         {
+        }
+        public Scatter(Coord3d[] coordinates, Color color)
+        {
+            _coordinates = coordinates;
+            _color = color;
         }
 
         public Scatter(Coord3d[] coordinates, Color rgb, float width = 1)
@@ -98,6 +103,11 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
         public override BoundingBox3d GetBounds()
         {
             throw new System.NotImplementedException();
+        }
+
+        public Coord3d[] GetCoordinates()
+        {
+            return _coordinates;
         }
 
         private Coord3d[] Data
