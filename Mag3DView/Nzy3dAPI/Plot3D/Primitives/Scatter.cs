@@ -47,6 +47,25 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
             Colors = colors;
         }
 
+        public override BoundingBox3d GetBounds()
+        {
+            if (_coordinates == null || _coordinates.Length == 0)
+            {
+                return new BoundingBox3d(); // Return an empty bounding box
+            }
+
+            // Calculate min and max for X, Y, Z
+            double xmin = _coordinates.Min(coord => coord.X);
+            double xmax = _coordinates.Max(coord => coord.X);
+            double ymin = _coordinates.Min(coord => coord.Y);
+            double ymax = _coordinates.Max(coord => coord.Y);
+            double zmin = _coordinates.Min(coord => coord.Z);
+            double zmax = _coordinates.Max(coord => coord.Z);
+
+            // Create and return the bounding box
+            return new BoundingBox3d(xmin, xmax, ymin, ymax, zmin, zmax);
+        }
+
         public void Clear()
         {
             _coordinates = null;
@@ -55,60 +74,40 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 
         public override void Draw(Camera cam)
         {
-            Debug.WriteLine("Executing Scatter.Draw()...");
+            Debug.WriteLine("Scatter.Draw() invoked.");
 
-            // Apply transformations if any
-            if (_transform != null)
-            {
-                Debug.WriteLine("Applying transformation...");
-                _transform.Execute();
-            }
+            _transform?.Execute();
 
-            // Set point size
             GL.PointSize(Width);
             GL.Begin(PrimitiveType.Points);
-
             if (_colors == null)
             {
-                // Set default color if no colors array is provided
-                Debug.WriteLine($"Using default color: R={Color.R}, G={Color.G}, B={Color.B}, A={Color.A}");
                 GL.Color4(Color.R, Color.G, Color.B, Color.A);
             }
 
             if (_coordinates != null)
             {
-                int k = 0;
                 Debug.WriteLine($"Rendering {_coordinates.Length} points...");
+                int k = 0;
                 foreach (Coord3d coord in _coordinates)
                 {
-                    // Apply individual colors if available
-                    if (_colors != null && k < _colors.Length)
+                    Debug.WriteLine($"Point {k}: X={coord.X}, Y={coord.Y}, Z={coord.Z}");
+                    if (_colors != null)
                     {
-                        var pointColor = _colors[k];
-                        Debug.WriteLine($"Point {k}: R={pointColor.R}, G={pointColor.G}, B={pointColor.B}, A={pointColor.A} at X={coord.X}, Y={coord.Y}, Z={coord.Z}");
-                        GL.Color4(pointColor.R, pointColor.G, pointColor.B, pointColor.A);
+                        GL.Color4(_colors[k].R, _colors[k].G, _colors[k].B, _colors[k].A);
                         k++;
                     }
-
-                    // Render the vertex
                     GL.Vertex3(coord.X, coord.Y, coord.Z);
                 }
             }
-            else
-            {
-                Debug.WriteLine("No coordinates to render.");
-            }
-
             GL.End();
 
-            // Check for OpenGL errors
+            // Check OpenGL errors
             var error = GL.GetError();
             if (error != ErrorCode.NoError)
             {
                 Debug.WriteLine($"OpenGL Error in Scatter.Draw(): {error}");
             }
-
-            Debug.WriteLine("Scatter.Draw() complete.");
         }
 
         public override Transform.Transform Transform
@@ -128,11 +127,6 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
             {
                 _bbox.Add(c);
             }
-        }
-
-        public override BoundingBox3d GetBounds()
-        {
-            throw new System.NotImplementedException();
         }
 
         public Coord3d[] GetCoordinates()

@@ -72,7 +72,12 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes
 			_components = new List<AbstractDrawable>();
 		}
 
-		public void Dispose()
+        public IEnumerable<AbstractDrawable> GetAllComponents()
+        {
+            return _components;
+        }
+
+        public void Dispose()
 		{
 			lock (_components)
 			{
