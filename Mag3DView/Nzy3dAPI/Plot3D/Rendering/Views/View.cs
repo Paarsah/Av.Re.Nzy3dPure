@@ -12,6 +12,7 @@ using Mag3DView.Nzy3dAPI.Plot3D.Transform;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
 {
@@ -104,7 +105,7 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
         private void AddLabel(string text, Coord3d position, Color color)
         {
             // Placeholder: Implement text rendering here or integrate with a text library
-            Console.WriteLine($"Label '{text}' at {position} with color {color}");
+            Debug.WriteLine($"Label '{text}' at {position} with color {color}");
         }
 
         // Adds the three main axes (X, Y, Z) to the scene
@@ -253,7 +254,7 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
             else
             {
                 // Log or handle the error appropriately
-                Console.WriteLine("Canvas is not initialized.");
+                Debug.WriteLine("Canvas is not initialized.");
             }
         }
 
