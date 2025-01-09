@@ -39,6 +39,7 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes
 		internal AbstractOrderingStrategy _strategy;
         public BoundingBox3d Bounds { get; private set; } = new BoundingBox3d(-1, 1, -1, 1, -1, 1);
         public List<AbstractDrawable> Objects { get; private set; } = new List<AbstractDrawable>();
+        private List<AbstractDrawable> drawables = new List<AbstractDrawable>();
 
 
         internal bool _sort = true;
@@ -77,6 +78,11 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes
             return _components;
         }
 
+        public IEnumerable<AbstractDrawable> GetAllDrawables()
+        {
+            return drawables;
+        }
+
         public void Dispose()
 		{
 			lock (_components)
@@ -107,9 +113,17 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes
 
 		public void Add(AbstractDrawable drawable)
 		{
-			Add(drawable, true);
+            Add(drawable, true);
             Objects.Add(drawable);
             UpdateBounds(drawable);
+            if (drawable != null)
+            {
+                drawables.Add(drawable);
+            }
+        }
+        public void Clear()
+        {
+            drawables.Clear();
         }
 
         private void UpdateBounds(AbstractDrawable drawable)

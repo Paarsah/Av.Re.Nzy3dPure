@@ -29,11 +29,10 @@ namespace Mag3DView.Nzy3dAPI.Maths
             Reset();
 		}
 
-
-		/// <summary>
-		/// Initialize a BoundingBox by calling its reset method and then adding a set of coordinates
-		/// </summary>
-		public BoundingBox3d(List<Coord3d> lst)
+        /// <summary>
+        /// Initialize a BoundingBox by calling its reset method and then adding a set of coordinates
+        /// </summary>
+        public BoundingBox3d(List<Coord3d> lst)
 		{
 			Reset();
 			foreach (Coord3d c in lst)
@@ -96,11 +95,17 @@ namespace Mag3DView.Nzy3dAPI.Maths
 			ZMin = double.MaxValue;
 			ZMax = double.MinValue;
 		}
+        public bool IsEmpty()
+        {
+            return XMin == 0 && XMax == 0 &&
+                   YMin == 0 && YMax == 0 &&
+                   ZMin == 0 && ZMax == 0;
+        }
 
-		/// <summary>
-		/// Check if bounding box is valid (i.e. limits are consistents).
-		/// </summary>
-		public bool IsValid()
+        /// <summary>
+        /// Check if bounding box is valid (i.e. limits are consistents).
+        /// </summary>
+        public bool IsValid()
 		{
 			return XMin <= XMax && YMin <= YMax && ZMin <= ZMax;
 		}

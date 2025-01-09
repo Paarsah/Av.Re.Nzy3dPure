@@ -40,6 +40,14 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
         public float Zoom { get; set; } = 5.0f;
         public float RotationX { get; set; } = 0.0f;
         public float RotationY { get; set; } = 0.0f;
+        private BoundingBox3d _bound;
+
+        public BoundingBox3d Bound
+        {
+            get => _bound;
+            set => _bound = value;
+        }
+
         public Matrix4 GetViewMatrix()
         {
             var rotationMatrixX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(RotationX));
@@ -133,6 +141,16 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
 				_far = _eye.Distance(_target) + _radius * 2;
 			}
 		}
+
+		public void SetView(Coord3d eye, Coord3d target, Coord3d up)
+{
+    Eye = eye;
+    Target = target;
+    Up = up;
+
+    // Optional: Calculate additional camera matrices here if needed.
+    // For example, create ViewMatrix using eye, target, and up.
+}
 
 		public void SetRenderingDepth(double near, double far)
 		{
@@ -441,18 +459,27 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
 			}
 		}
 
-		/// <summary>
-		/// Sets the projection, and the mapping of 3d environement to 2d screen.
-		/// The projection must be either Camera.PERSPECTIVE or Camera.ORTHOGONAL.
-		/// <br/>
-		/// Finally calls the GL2 function LookAt, according to the stored
-		/// eye, target, up and scale values.
-		/// <br/>
-		/// Note that the Camera set by itselft the MatrixMode to model view
-		/// at the end of a shoot().
-		/// </summary>
-		/// <param name="projection">Project mode</param>
-		public void Shoot(CameraMode projection)
+        public void SetBound(BoundingBox3d bounds)
+        {
+            if (bounds != null && !bounds.IsEmpty())
+            {
+                this.Bound = bounds; // Assuming `Bound` is a property in `Camera`
+            }
+        }
+
+
+        /// <summary>
+        /// Sets the projection, and the mapping of 3d environement to 2d screen.
+        /// The projection must be either Camera.PERSPECTIVE or Camera.ORTHOGONAL.
+        /// <br/>
+        /// Finally calls the GL2 function LookAt, according to the stored
+        /// eye, target, up and scale values.
+        /// <br/>
+        /// Note that the Camera set by itselft the MatrixMode to model view
+        /// at the end of a shoot().
+        /// </summary>
+        /// <param name="projection">Project mode</param>
+        public void Shoot(CameraMode projection)
 		{
 			Shoot(projection, false);
 		}

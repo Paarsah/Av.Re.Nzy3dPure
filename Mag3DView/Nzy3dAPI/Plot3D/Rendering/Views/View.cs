@@ -93,6 +93,12 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views
             _axe = new AxeBox(initialBox, layout); // Use the default AxeBoxLayout
         }
 
+        public void SetBoundManual(BoundingBox3d bounds)
+        {
+            BoundManual = bounds;
+            Camera.SetBound(bounds); // Update the camera's bounds if needed
+        }
+
         private void AddLine(Coord3d start, Coord3d end, Color color)
         {
             GL.Begin(PrimitiveType.Lines);
