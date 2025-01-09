@@ -113,7 +113,8 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
         public override void Draw(Camera cam)
         {
             Debug.WriteLine("Scatter.Draw() invoked.");
-            GL.PointSize(_pointSize);
+
+            GL.PointSize(_pointSize); // Set point size
             GL.Begin(PrimitiveType.Points);
 
             if (_coordinates != null)
@@ -121,14 +122,18 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
                 for (int i = 0; i < _coordinates.Length; i++)
                 {
                     var point = _coordinates[i];
+
+                    // Set color for the point
                     if (_colors != null && i < _colors.Length)
                     {
-                        GL.Color4(_colors[i].R, _colors[i].G, _colors[i].B, _colors[i].A);
+                        GL.Color4(_colors[i].R / 255.0f, _colors[i].G / 255.0f, _colors[i].B / 255.0f, _colors[i].A / 255.0f);
                     }
                     else
                     {
-                        GL.Color4(_color.R, _color.G, _color.B, _color.A);
+                        GL.Color4(_color.R / 255.0f, _color.G / 255.0f, _color.B / 255.0f, _color.A / 255.0f);
                     }
+
+                    // Draw the point
                     GL.Vertex3(point.X, point.Y, point.Z);
                 }
             }
@@ -138,7 +143,7 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
             var error = GL.GetError();
             if (error != ErrorCode.NoError)
             {
-                Debug.WriteLine($"OpenGL Error: {error}");
+                Debug.WriteLine($"OpenGL Error in Scatter: {error}");
             }
         }
 

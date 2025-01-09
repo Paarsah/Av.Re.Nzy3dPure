@@ -1,6 +1,7 @@
 ﻿using Mag3DView.Nzy3dAPI.Colors;
 using Mag3DView.Nzy3dAPI.Maths;
 using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
 
@@ -17,12 +18,37 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
 
         public override void Draw(Camera camera)
         {
-            // Draw axis lines
-            DrawLine(camera, new Coord3d(_bbox.Xmin, 0, 0), new Coord3d(_bbox.Xmax, 0, 0), Color.RED); // X-axis
-            DrawLine(camera, new Coord3d(0, _bbox.Ymin, 0), new Coord3d(0, _bbox.Ymax, 0), Color.GREEN); // Y-axis
-            DrawLine(camera, new Coord3d(0, 0, _bbox.Zmin), new Coord3d(0, 0, _bbox.Zmax), Color.BLUE); // Z-axis
+            Debug.WriteLine("AxeDrawable.Draw() invoked.");
 
-            // Optionally, add ticks or labels here
+            // Set line width for axes
+            GL.LineWidth(2.0f);
+
+            // X-axis (Red)
+            GL.Color3(1.0f, 0.0f, 0.0f); // Red
+            GL.Begin(PrimitiveType.Lines);
+            GL.Vertex3(_bbox.Xmin, 0, 0);
+            GL.Vertex3(_bbox.Xmax, 0, 0);
+            GL.End();
+
+            // Y-axis (Green)
+            GL.Color3(0.0f, 1.0f, 0.0f); // Green
+            GL.Begin(PrimitiveType.Lines);
+            GL.Vertex3(0, _bbox.Ymin, 0);
+            GL.Vertex3(0, _bbox.Ymax, 0);
+            GL.End();
+
+            // Z-axis (Blue)
+            GL.Color3(0.0f, 0.0f, 1.0f); // Blue
+            GL.Begin(PrimitiveType.Lines);
+            GL.Vertex3(0, 0, _bbox.Zmin);
+            GL.Vertex3(0, 0, _bbox.Zmax);
+            GL.End();
+
+            var error = GL.GetError();
+            if (error != ErrorCode.NoError)
+            {
+                Debug.WriteLine($"OpenGL Error in AxeDrawable: {error}");
+            }
         }
 
         private void DrawLine(Camera camera, Coord3d start, Coord3d end, Color color)
