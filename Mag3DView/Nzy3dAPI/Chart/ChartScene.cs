@@ -1,4 +1,6 @@
+using Mag3DView.Nzy3dAPI.Colors;
 using Mag3DView.Nzy3dAPI.Maths;
+using Mag3DView.Nzy3dAPI.Plot3D.Primitives;
 using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Canvas;
 using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes;
 using Mag3DView.Nzy3dAPI.Plot3D.Rendering.Views;
@@ -11,10 +13,43 @@ namespace Mag3DView.Nzy3dAPI.Chart
 		internal int _nview;
 
 		internal View _view;
-		public ChartScene(bool graphsort) : base(graphsort)
+
+        public ChartScene()
+        {
+            // Initialize the scene and add axes
+            AddAxes();
+        }
+
+        public ChartScene(bool graphsort) : base(graphsort)
 		{
 			_nview = 0;
 		}
+
+        /// <summary>
+        /// Draws the scene using the provided camera.
+        /// </summary>
+        public void Draw(Camera camera)
+        {
+            foreach (AbstractDrawable drawable in Graph.Drawables)
+            {
+                drawable.Draw(camera);
+            }
+        }
+
+        public void AddAxes()
+        {
+            // Define bounding box for axes
+            var bbox = new BoundingBox3d(-10, 10, -10, 10, -10, 10);
+
+            // Create axes and customize their colors
+            var axes = new AxeDrawable(bbox)
+            {
+                Colors = new[] { Color.RED, Color.GREEN, Color.BLUE }
+            };
+
+            // Add the axes to the scene
+            Add(axes);
+        }
 
         public void Refresh()
         {

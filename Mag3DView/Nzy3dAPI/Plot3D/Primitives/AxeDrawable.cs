@@ -10,6 +10,7 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
     public class AxeDrawable : AbstractDrawable
     {
         private BoundingBox3d _bbox;
+        public Color[] Colors { get; set; } = { Color.RED, Color.GREEN, Color.BLUE };
 
         public AxeDrawable(BoundingBox3d bbox)
         {
@@ -20,25 +21,24 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Primitives
         {
             Debug.WriteLine("AxeDrawable.Draw() invoked.");
 
-            // Set line width for axes
             GL.LineWidth(2.0f);
 
-            // X-axis (Red)
-            GL.Color3(1.0f, 0.0f, 0.0f); // Red
+            // X-axis
+            GL.Color4(Colors[0].OpenTKColor4);
             GL.Begin(PrimitiveType.Lines);
             GL.Vertex3(_bbox.Xmin, 0, 0);
             GL.Vertex3(_bbox.Xmax, 0, 0);
             GL.End();
 
-            // Y-axis (Green)
-            GL.Color3(0.0f, 1.0f, 0.0f); // Green
+            // Y-axis
+            GL.Color4(Colors[1].OpenTKColor4);
             GL.Begin(PrimitiveType.Lines);
             GL.Vertex3(0, _bbox.Ymin, 0);
             GL.Vertex3(0, _bbox.Ymax, 0);
             GL.End();
 
-            // Z-axis (Blue)
-            GL.Color3(0.0f, 0.0f, 1.0f); // Blue
+            // Z-axis
+            GL.Color4(Colors[2].OpenTKColor4);
             GL.Begin(PrimitiveType.Lines);
             GL.Vertex3(0, 0, _bbox.Zmin);
             GL.Vertex3(0, 0, _bbox.Zmax);

@@ -16,7 +16,7 @@ namespace Mag3DView.Nzy3dAPI.Chart
 {
     public class Chart
     {
-        protected ChartScene _scene;
+        protected ChartScene _scene { get; private set; }
         protected View _view;
         protected ICanvas _canvas;
         protected Coord3d _previousViewPointFree;
@@ -26,6 +26,13 @@ namespace Mag3DView.Nzy3dAPI.Chart
         private Coord3d _previousMousePosition;
         public static readonly Quality DEFAULT_QUALITY = Quality.Intermediate;
         public Camera Camera { get; private set; }
+
+        public Chart()
+        {
+            // Initialize the scene
+            _scene = new ChartScene();
+        }
+
         public Chart(ICanvas canvas, Scene scene) : this(canvas, DEFAULT_QUALITY)
         {
             Camera = new Camera();
@@ -107,6 +114,12 @@ namespace Mag3DView.Nzy3dAPI.Chart
             _view.Shoot();
             _view.Project();
             Render();
+        }
+
+        public void Render(Camera camera)
+        {
+            // Render the scene using the given camera
+            _scene.Draw(camera);
         }
 
         /// <summary>

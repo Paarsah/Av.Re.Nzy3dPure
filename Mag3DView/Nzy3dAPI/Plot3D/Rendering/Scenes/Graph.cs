@@ -41,7 +41,6 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes
         public List<AbstractDrawable> Objects { get; private set; } = new List<AbstractDrawable>();
         private List<AbstractDrawable> drawables = new List<AbstractDrawable>();
 
-
         internal bool _sort = true;
         public Graph()
         {
@@ -51,7 +50,13 @@ namespace Mag3DView.Nzy3dAPI.Plot3D.Rendering.Scenes
             _components = new List<AbstractDrawable>();
             Bounds = new BoundingBox3d();
             Objects = new List<AbstractDrawable>();
+            drawables = new List<AbstractDrawable>();
         }
+
+        /// <summary>
+        /// Gets the collection of drawables in the graph.
+        /// </summary>
+        public IEnumerable<AbstractDrawable> Drawables => drawables;
 
         public Graph(Scene scene) : this(scene, new DefaultOrderingStrategy(), true)
 		{
